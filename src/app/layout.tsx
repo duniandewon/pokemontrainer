@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
+import { cn } from "@/lib/utils";
+
 import "./globals.css";
+import { QueryClientProviders } from "@/components/queryClinetProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, "h-screen")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <QueryClientProviders>{children}</QueryClientProviders>
         </ThemeProvider>
       </body>
     </html>
