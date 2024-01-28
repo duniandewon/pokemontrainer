@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { usePokemonsVM } from "./usePokemonsVM";
 
@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 function Pokemons() {
-  const { pokemons, isFetching, fetchNextPage } = usePokemonsVM();
+  const { pokemons, hasNext, isFetching, fetchNextPage, onSearchPokemons } =
+    usePokemonsVM();
 
   const lastPokemon = useRef<HTMLLIElement>(null);
 
@@ -18,6 +19,11 @@ function Pokemons() {
       if (enries[0].isIntersecting && !isFetching) fetchNextPage();
     },
     [isFetching, fetchNextPage]
+  );
+
+  const handleOnChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => onSearchPokemons(e.target.value),
+    [onSearchPokemons]
   );
 
   useEffect(() => {
@@ -33,7 +39,7 @@ function Pokemons() {
   return (
     <div className="h-full grid gap-4 px-4 py-5 grid-rows-[auto_1fr_auto]">
       <header>
-        <Input placeholder="Search pokemons" />
+        <Input placeholder="Search pokemons" onChange={handleOnChange} />
       </header>
       <main className="overflow-y-auto">
         <ul className="grid grid-cols-[repeat(4,_minmax(100px,_1fr))] auto-rows-[minmax(100px,_1fr)]">
@@ -42,7 +48,9 @@ function Pokemons() {
               pokemons.map((pokemon, i, prevPkemons) => (
                 <li
                   key={pokemon.id}
-                  ref={prevPkemons.length - 1 === i ? lastPokemon : null}
+                  ref={
+                    prevPkemons.length - 1 === i && hasNext ? lastPokemon : null
+                  }
                 >
                   <Image
                     src={pokemon.image}
@@ -52,7 +60,7 @@ function Pokemons() {
                   />
                 </li>
               )),
-            [pokemons]
+            [pokemons, hasNext]
           )}
         </ul>
       </main>

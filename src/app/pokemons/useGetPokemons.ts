@@ -3,11 +3,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 export function useGetPokemons(
   limit: number,
-  fetchFn: (limit: number, offset: number) => Promise<Pokemons>
+  search: string = "",
+  fetchFn: (limit: number, offset: number, search: string) => Promise<Pokemons>
 ) {
   return useInfiniteQuery({
-    queryKey: ["pokemons"],
-    queryFn: ({ pageParam }) => fetchFn(limit, pageParam),
+    queryKey: ["pokemons", search],
+    queryFn: ({ pageParam }) => fetchFn(limit, pageParam, search),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       return lastPage.meta.nextOffset;
