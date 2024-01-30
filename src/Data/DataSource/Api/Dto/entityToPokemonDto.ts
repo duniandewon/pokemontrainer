@@ -6,7 +6,9 @@ export function entityToPokemonDto(pokemonEntity: PokemonEntity): Pokemons {
     data: pokemonEntity.data.pokemon_v2_pokemon.map((pokemon) => ({
       id: pokemon.id,
       name: pokemon.name,
-      image: pokemon.pokemon_v2_pokemonsprites[0].sprites.front_default,
+      image:
+        pokemon.pokemon_v2_pokemonsprites[0].sprites.other?.["official-artwork"]
+          .front_default || "",
     })),
     meta: {
       hasNext: pokemonEntity.meta.hasNext,
