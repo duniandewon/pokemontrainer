@@ -1,6 +1,11 @@
-import { PokemonDetail, PokemonStats } from "@/Domain/pokemon/Model/PokemonDetail";
+import {
+  PokemonDetail,
+  PokemonStats,
+} from "@/Domain/pokemon/Model/PokemonDetail";
 import {
   PokemonDetailEntity,
+  PokemonV2Pokemonspecy,
+  PokemonV2PokemonspecyPokemonV2Pokemon,
   PokemonV2Pokemonstat,
 } from "../Entity/PokemonDetailsEntity";
 
@@ -38,12 +43,32 @@ function pokemonV2PokemonstatToPokemonStats(
   return pokemonStats;
 }
 
+function getNextEvolution(evolutions: PokemonV2Pokemonspecy[]) {
+  let nextEvolution: PokemonV2PokemonspecyPokemonV2Pokemon | undefined;
+
+  let smallestWeight = Number.MAX_VALUE;
+
+  for (const evolution of evolutions) {
+    const pokemons = evolution.pokemon_v2_pokemons;
+
+    for (const pokemon of pokemons) {
+      if (pokemon.weight < smallestWeight) {
+        smallestWeight = pokemon.weight;
+        nextEvolution = pokemon;
+      }
+    }
+  }
+
+  return nextEvolution;
+}
+
 export function entityToPokemonDetailDto(
   pokemonEntity: PokemonDetailEntity
 ): PokemonDetail {
   const pokemon = pokemonEntity.data.pokemon_v2_pokemon[0];
-  const species =
-    pokemonEntity.data.pokemon_v2_pokemonspecies[0].pokemon_v2_pokemons[0];
+  const nextEvolution = getNextEvolution(
+    pokemonEntity.data.pokemon_v2_pokemonspecies
+  );
 
   return {
     id: pokemon.id,
@@ -51,8 +76,8 @@ export function entityToPokemonDetailDto(
     image:
       pokemon.pokemon_v2_pokemonsprites[0].sprites.other?.["official-artwork"]
         .front_default || "",
-    maxWeight: species.weight,
-    nextEvolution: species.id,
+    maxWeight: nextEvolution?.weight || 0,
+    nextEvolution: nextEvolution?.id || -1,
     stats: {
       ...pokemonV2PokemonstatToPokemonStats(pokemon.pokemon_v2_pokemonstats),
       weight: pokemon.weight,

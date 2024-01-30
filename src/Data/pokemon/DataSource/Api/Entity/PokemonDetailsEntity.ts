@@ -141,11 +141,11 @@ interface PokemonV2Stat {
   name: string;
 }
 
-interface PokemonV2Pokemonspecy {
+export interface PokemonV2Pokemonspecy {
   pokemon_v2_pokemons: PokemonV2PokemonspecyPokemonV2Pokemon[];
 }
 
-interface PokemonV2PokemonspecyPokemonV2Pokemon {
+export interface PokemonV2PokemonspecyPokemonV2Pokemon {
   id: number;
   name: string;
   weight: number;
