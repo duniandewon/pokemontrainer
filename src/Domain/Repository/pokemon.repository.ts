@@ -1,4 +1,5 @@
 import { Pokemons } from "../Model/Pokemon";
+import { PokemonDetail } from "../Model/PokemonDetail";
 
 export interface PokemonRepository {
   getPokemons(
@@ -6,4 +7,6 @@ export interface PokemonRepository {
     offset: number,
     search?: string
   ): Promise<Pokemons>;
+
+  getPokemonDetail(id: number): Promise<PokemonDetail>;
 }

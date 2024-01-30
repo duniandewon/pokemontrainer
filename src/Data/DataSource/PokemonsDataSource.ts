@@ -1,3 +1,4 @@
+import { PokemonDetailEntity } from "./Api/Entity/PokemonDetailsEntity";
 import { PokemonEntity } from "./Api/Entity/PokemonEntity";
 
 export interface PokemonDataSource {
@@ -6,4 +7,5 @@ export interface PokemonDataSource {
     offset: number,
     search?: string
   ): Promise<PokemonEntity>;
+  getPokemonDetail(id: number): Promise<PokemonDetailEntity>;
 }
