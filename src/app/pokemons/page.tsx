@@ -1,7 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
+
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { usePokemonsVM } from "./usePokemonsVM";
 
@@ -12,7 +21,11 @@ function Pokemons() {
   const { pokemons, hasNext, isFetching, fetchNextPage, onSearchPokemons } =
     usePokemonsVM();
 
+  const [selectedPokemon, setSelectedPokemon] = useState(-1);
+
   const lastPokemon = useRef<HTMLLIElement>(null);
+
+  const router = useRouter();
 
   const handleIntersectinObserver = useCallback(
     (enries: IntersectionObserverEntry[]) => {
@@ -37,12 +50,12 @@ function Pokemons() {
   }, [handleIntersectinObserver]);
 
   return (
-    <div className="h-full grid gap-4 px-4 py-5 grid-rows-[auto_1fr_auto]">
+    <div className="h-full px-4 py-5 grid grid-rows-[auto_1fr_auto] gap-4">
       <header>
         <Input placeholder="Search pokemons" onChange={handleOnChange} />
       </header>
       <main className="overflow-y-auto">
-        <ul className="grid grid-cols-[repeat(4,_minmax(100px,_1fr))] auto-rows-[minmax(100px,_1fr)]">
+        <ul className="grid gap-4 grid-cols-[repeat(auto-fill,_minmax(100px,_1fr))] auto-rows-[minmax(100px,_1fr)]">
           {useMemo(
             () =>
               pokemons.map((pokemon, i, prevPkemons) => (
@@ -52,20 +65,37 @@ function Pokemons() {
                     prevPkemons.length - 1 === i && hasNext ? lastPokemon : null
                   }
                 >
-                  <Image
-                    src={pokemon.image}
-                    alt={pokemon.name}
-                    width={150}
-                    height={150}
-                  />
+                  <div
+                    onClick={() => {
+                      setSelectedPokemon(pokemon.id);
+                    }}
+                    className={`cursor-pointer border hover:border-slate-300 p-2 ${
+                      selectedPokemon === pokemon.id
+                        ? "border-slate-300"
+                        : "border-transparent"
+                    }`}
+                  >
+                    <Image
+                      src={pokemon.image}
+                      alt={pokemon.name}
+                      width={150}
+                      height={150}
+                    />
+                  </div>
                 </li>
               )),
-            [pokemons, hasNext]
+            [pokemons, hasNext, selectedPokemon]
           )}
         </ul>
       </main>
       <footer>
-        <Button className="w-full">Choose Me</Button>
+        <Button
+          disabled={selectedPokemon < 0}
+          className="w-full"
+          onClick={() => router.push(`/pokemons/${selectedPokemon}`)}
+        >
+          Choose Me
+        </Button>
       </footer>
     </div>
   );
