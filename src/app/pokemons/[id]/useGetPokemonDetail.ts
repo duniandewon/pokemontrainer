@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { PokemonDetail } from "@/Domain/Model/PokemonDetail";
+import { PokemonDetail } from "@/Domain/pokemon/Model/PokemonDetail";
 
 export function useGetPokemonDetail(
   id: number,
