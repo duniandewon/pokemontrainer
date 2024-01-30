@@ -1,4 +1,4 @@
-import { Pokemons } from "@/Domain/Model/Pokemon";
+import { Pokemons } from "@/Domain/pokemon/Model/Pokemon";
 import { PokemonEntity } from "../Entity/PokemonEntity";
 
 export function entityToPokemonDto(pokemonEntity: PokemonEntity): Pokemons {

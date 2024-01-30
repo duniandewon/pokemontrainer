@@ -1,4 +1,4 @@
-import { PokemonDetail, PokemonStats } from "@/Domain/Model/PokemonDetail";
+import { PokemonDetail, PokemonStats } from "@/Domain/pokemon/Model/PokemonDetail";
 import {
   PokemonDetailEntity,
   PokemonV2Pokemonstat,

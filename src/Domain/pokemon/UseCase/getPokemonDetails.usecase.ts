@@ -1,5 +1,5 @@
-import { PokemonDetail } from "../Model/PokemonDetail";
-import { PokemonRepository } from "../Repository/pokemon.repository";
+import { PokemonDetail } from "@/Domain/pokemon/Model/PokemonDetail";
+import { PokemonRepository } from "@/Domain/pokemon/Repository/pokemon.repository";
 
 interface GetPokemonDetailsUseCase {
   invoke(id: number): Promise<PokemonDetail>;

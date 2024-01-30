@@ -1,16 +1,16 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { pokemonsApiImpl } from "@/Data/DataSource/Api/PokemonsApiImpl";
-import { pokemonRepositoryImpl } from "@/Data/Repository/PokemonRepositoryImpl";
+import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/Api/PokemonsApiImpl";
+import { pokemonRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRepositoryImpl";
 
-import { getPokemonsUseCase } from "@/Domain/UseCase/getPokemons.usecase";
+import { getPokemonsUseCase } from "@/Domain/pokemon/UseCase/getPokemons.usecase";
 
 import { useGetPokemons } from "./useGetPokemons";
 import useDebounce from "./useDebounce";
 
 export function usePokemonsVM() {
   const pokemonsApi = useMemo(() => pokemonsApiImpl(), []);
-  
+
   const pokemonsRepoImpl = useMemo(
     () => pokemonRepositoryImpl(pokemonsApi),
     [pokemonsApi]

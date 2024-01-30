@@ -1,5 +1,6 @@
-import { Pokemons } from "@/Domain/Model/Pokemon";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
+import { Pokemons } from "@/Domain/pokemon/Model/Pokemon";
 
 export function useGetPokemons(
   limit: number,

@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 
-import { pokemonsApiImpl } from "@/Data/DataSource/Api/PokemonsApiImpl";
-import { pokemonRepositoryImpl } from "@/Data/Repository/PokemonRepositoryImpl";
+import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/Api/PokemonsApiImpl";
+import { pokemonRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRepositoryImpl";
 
-import { getPokemonDetailUseCase } from "@/Domain/UseCase/getPokemonDetails.usecase";
+import { getPokemonDetailUseCase } from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
 
 import { useGetPokemonDetail } from "./useGetPokemonDetail";
 
