@@ -1,0 +1,16 @@
+.berry {
+  @apply w-max;
+}
+
+.berry__input {
+  @apply hidden;
+}
+
+.berry__input:checked + .berry__label {
+  @apply border-slate-300;
+}
+
+.berry__label {
+  @apply inline-block p-1 cursor-pointer;
+  @apply border rounded-md border-transparent hover:border-slate-600;
+}
