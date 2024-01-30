@@ -4,26 +4,28 @@ import { pokemonsApiImpl } from "@/Data/DataSource/Api/PokemonsApiImpl";
 import { pokemonRepositoryImpl } from "@/Data/Repository/PokemonRepositoryImpl";
 
 import { getPokemonsUseCase } from "@/Domain/UseCase/getPokemons.usecase";
+
 import { useGetPokemons } from "./useGetPokemons";
 import useDebounce from "./useDebounce";
 
 export function usePokemonsVM() {
-  const limit = useRef(40);
-
-  const [search, setSearch] = useState("");
-
   const pokemonsApi = useMemo(() => pokemonsApiImpl(), []);
-  const pokemonsRepo = useMemo(
+  
+  const pokemonsRepoImpl = useMemo(
     () => pokemonRepositoryImpl(pokemonsApi),
     [pokemonsApi]
   );
 
-  const searchDebounced = useDebounce(search, 1000);
-
   const getPokemonsUC = useMemo(
-    () => getPokemonsUseCase(pokemonsRepo),
-    [pokemonsRepo]
+    () => getPokemonsUseCase(pokemonsRepoImpl),
+    [pokemonsRepoImpl]
   );
+
+  const limit = useRef(40);
+
+  const [search, setSearch] = useState("");
+
+  const searchDebounced = useDebounce(search, 1000);
 
   const fetchPokemons = useCallback(
     async (limit: number, offset: number, search: string) => {
