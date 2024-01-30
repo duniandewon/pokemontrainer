@@ -1,14 +1,15 @@
 import { useCallback, useMemo } from "react";
 
+import { useQuery } from "@tanstack/react-query";
+
 import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/Api/PokemonsApiImpl";
 import { pokemonRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRepositoryImpl";
 
 import { getPokemonDetailUseCase } from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
 
-import { useGetPokemonDetail } from "./useGetPokemonDetail";
-
-export function usePokemonsDetailVM(id: number) {
+export function usePokemonDetailVM(id: number) {
   const pokemonsApi = useMemo(() => pokemonsApiImpl(), []);
+
   const pokemonsRepoImpl = useMemo(
     () => pokemonRepositoryImpl(pokemonsApi),
     [pokemonsApi]
@@ -26,7 +27,16 @@ export function usePokemonsDetailVM(id: number) {
     [getPokemonDetailUC]
   );
 
-  const { data, status } = useGetPokemonDetail(id, getPokemonsDetail);
+  const { data, isLoading } = useQuery({
+    queryKey: ["pokemon-detail", id],
+    queryFn: () => getPokemonsDetail(id),
+  });
 
-  return { data, status };
+  const readyToEvolve = useMemo(() => {
+    if (!data) return false;
+
+    return data.maxWeight === data.stats.weight;
+  }, [data]);
+
+  return { data, readyToEvolve, isLoading };
 }
