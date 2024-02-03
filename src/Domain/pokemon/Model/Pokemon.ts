@@ -3,15 +3,3 @@ export interface Pokemon {
   name: string;
   image: string;
 }
-
-export interface Pokemons {
-  data: Pokemon[];
-  meta: {
-    hasNext: boolean;
-    nextOffset: number;
-  };
-  errors?: {
-    message: string;
-    code: string;
-  }[];
-}

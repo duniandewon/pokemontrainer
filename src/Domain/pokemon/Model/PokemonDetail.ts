@@ -12,4 +12,5 @@ export interface PokemonDetail extends Pokemon {
   maxWeight: number;
   nextEvolution: number;
   stats: PokemonStats;
+  prevMeal: string;
 }
