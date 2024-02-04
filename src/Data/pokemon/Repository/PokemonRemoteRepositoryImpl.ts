@@ -4,7 +4,7 @@ import { mapFromReomtePokemonDetail } from "../DataSource/remote/mapper/mapFromR
 
 import { PokemonRemoteRepository } from "@/Domain/pokemon/Repository/pokemonRemote.repository";
 
-export function pokemonRepositoryImpl(
+export function pokemonRemoteRepositoryImpl(
   dataSource: PokemonServices
 ): PokemonRemoteRepository {
   const getPokemons = async (

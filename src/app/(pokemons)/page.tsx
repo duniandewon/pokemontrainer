@@ -1,53 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
 
 import { usePokemonsVM } from "./usePokemonsVM";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-function Pokemons() {
-  const { pokemons, hasNext, isFetching, fetchNextPage, onSearchPokemons } =
-    usePokemonsVM();
-
-  const [selectedPokemon, setSelectedPokemon] = useState(-1);
-
-  const lastPokemon = useRef<HTMLLIElement>(null);
-
-  const router = useRouter();
-
-  const handleIntersectinObserver = useCallback(
-    (enries: IntersectionObserverEntry[]) => {
-      if (enries[0].isIntersecting && !isFetching) fetchNextPage();
-    },
-    [isFetching, fetchNextPage]
-  );
+export default function Home() {
+  const {
+    pokemons,
+    hasNext,
+    selectedPokemon,
+    lastPokemon,
+    onSearchPokemons,
+    onSelectPokemon,
+    onChoosePokemon,
+  } = usePokemonsVM();
 
   const handleOnChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => onSearchPokemons(e.target.value),
     [onSearchPokemons]
   );
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersectinObserver);
-
-    if (lastPokemon.current) {
-      observer.observe(lastPokemon.current);
-    }
-
-    return () => observer.disconnect();
-  }, [handleIntersectinObserver]);
+  const handleChoosePokemon = useCallback(() => {
+    onChoosePokemon();
+  }, [onChoosePokemon]);
 
   return (
     <div className="h-full px-4 py-5 grid grid-rows-[auto_1fr_auto] gap-4">
@@ -67,7 +46,7 @@ function Pokemons() {
                 >
                   <div
                     onClick={() => {
-                      setSelectedPokemon(pokemon.id);
+                      onSelectPokemon(pokemon.id);
                     }}
                     className={`cursor-pointer border hover:border-slate-300 p-2 ${
                       selectedPokemon === pokemon.id
@@ -84,15 +63,15 @@ function Pokemons() {
                   </div>
                 </li>
               )),
-            [pokemons, hasNext, selectedPokemon]
+            [pokemons, selectedPokemon, lastPokemon, hasNext, onSelectPokemon]
           )}
         </ul>
       </main>
       <footer>
         <Button
-          disabled={selectedPokemon < 0}
           className="w-full"
-          onClick={() => router.push(`/pokemons/${selectedPokemon}`)}
+          disabled={selectedPokemon < 0}
+          onClick={handleChoosePokemon}
         >
           Choose Me
         </Button>
@@ -100,5 +79,3 @@ function Pokemons() {
     </div>
   );
 }
-
-export default Pokemons;
