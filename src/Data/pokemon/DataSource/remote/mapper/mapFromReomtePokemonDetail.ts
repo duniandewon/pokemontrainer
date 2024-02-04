@@ -1,13 +1,16 @@
 import {
-  PokemonDetail,
-  PokemonStats,
-} from "@/Domain/pokemon/Model/PokemonDetail";
-import {
-  PokemonDetailEntity,
+  Data,
   PokemonV2Pokemonspecy,
   PokemonV2PokemonspecyPokemonV2Pokemon,
   PokemonV2Pokemonstat,
 } from "../Entity/PokemonDetailsEntity";
+
+import { Response } from "@/Domain/pokemon/Model/Response";
+import {
+  PokemonDetail,
+  PokemonStats,
+} from "@/Domain/pokemon/Model/PokemonDetail";
+import { PokemonResponse } from "../Entity/PokemonResponse";
 
 function pokemonV2PokemonstatToPokemonStats(
   pokemonV2Pokemonstat: PokemonV2Pokemonstat[]
@@ -62,25 +65,28 @@ function getNextEvolution(evolutions: PokemonV2Pokemonspecy[]) {
   return nextEvolution;
 }
 
-export function entityToPokemonDetailDto(
-  pokemonEntity: PokemonDetailEntity
-): PokemonDetail {
-  const pokemon = pokemonEntity.data.pokemon_v2_pokemon[0];
+export function mapFromReomtePokemonDetail(
+  pokemonDetailResponse: PokemonResponse<Data>
+): Response<PokemonDetail> {
+  const pokemon = pokemonDetailResponse.data.pokemon_v2_pokemon[0];
   const nextEvolution = getNextEvolution(
-    pokemonEntity.data.pokemon_v2_pokemonspecies
+    pokemonDetailResponse.data.pokemon_v2_pokemonspecies
   );
 
   return {
-    id: pokemon.id,
-    name: pokemon.name,
-    image:
-      pokemon.pokemon_v2_pokemonsprites[0].sprites.other?.["official-artwork"]
-        .front_default || "",
-    maxWeight: nextEvolution?.weight || 0,
-    nextEvolution: nextEvolution?.id || -1,
-    stats: {
-      ...pokemonV2PokemonstatToPokemonStats(pokemon.pokemon_v2_pokemonstats),
-      weight: pokemon.weight,
+    data: {
+      id: pokemon.id,
+      name: pokemon.name,
+      image:
+        pokemon.pokemon_v2_pokemonsprites[0].sprites.other?.["official-artwork"]
+          .front_default || "",
+      maxWeight: nextEvolution?.weight || 0,
+      nextEvolution: nextEvolution?.id || -1,
+      prevMeal: "",
+      stats: {
+        ...pokemonV2PokemonstatToPokemonStats(pokemon.pokemon_v2_pokemonstats),
+        weight: pokemon.weight,
+      },
     },
   };
 }

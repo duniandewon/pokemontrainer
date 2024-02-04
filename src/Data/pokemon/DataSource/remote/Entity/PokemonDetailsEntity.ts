@@ -1,7 +1,3 @@
-export interface PokemonDetailEntity {
-  data: Data;
-}
-
 export interface Data {
   pokemon_v2_pokemon: DataPokemonV2Pokemon[];
   pokemon_v2_pokemonspecies: PokemonV2Pokemonspecy[];
