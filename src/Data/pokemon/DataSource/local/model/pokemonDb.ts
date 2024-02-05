@@ -6,12 +6,12 @@ export interface PokemonStats {
   weight: number;
 }
 
-export interface PokemonDetail {
+export interface PokemonDb {
   id: number;
   name: string;
   image: string;
+  prevMeal: string;
   maxWeight: number;
   nextEvolution: number;
   stats: PokemonStats;
-  prevMeal: string;
 }

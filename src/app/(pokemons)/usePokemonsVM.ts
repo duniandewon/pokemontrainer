@@ -6,15 +6,24 @@ import useDebounce from "./useDebounce";
 import { getPokemonsUseCase } from "@/Domain/pokemon/UseCase/getPokemons.usecase";
 
 import { pokemonRemoteRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRemoteRepositoryImpl";
+import { pokemonLocalRepositoryImpl } from "@/Data/pokemon/Repository/pokemonLocalRepositoryImpl.ts";
+
 import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/remote/api/PokemonApi";
+import { pokemonDataBaseImpl } from "@/Data/pokemon/DataSource/local/db/PokemonsDatabse";
+
 import { getPokemonDetailUseCase } from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
+
 import { useGetPokemonDetail } from "./useGetPokemonDetail";
+import { choosePokemonUseCase } from "@/Domain/pokemon/UseCase/choosePokemon.usecase";
 
 const pokmeonsApi = pokemonsApiImpl();
+const pokemonDb = pokemonDataBaseImpl();
 const pokemonsRemoteRepo = pokemonRemoteRepositoryImpl(pokmeonsApi);
+const pokemonLocalRepo = pokemonLocalRepositoryImpl(pokemonDb);
 
 const getPokemonsUC = getPokemonsUseCase(pokemonsRemoteRepo);
 const getPokemonDetailUC = getPokemonDetailUseCase(pokemonsRemoteRepo);
+const choosePokemonUC = choosePokemonUseCase(pokemonLocalRepo);
 
 export function usePokemonsVM() {
   const [search, setSearch] = useState("");
@@ -46,23 +55,24 @@ export function usePokemonsVM() {
     fetchNextPage,
   } = useGetPokemons(limit.current, searchDebounced, fetchPokemons);
 
-  const { data: pokemonDetailData, isFetching: isFetchingPokemonDetail, refetch } = useGetPokemonDetail(
-    selectedPokemon,
-    getPokemonDetail
-  );
+  const {
+    data: pokemonDetailData,
+    refetch,
+  } = useGetPokemonDetail(selectedPokemon, getPokemonDetail);
 
   const onSearchPokemons = useCallback((search: string) => {
     setSearch(search);
   }, []);
 
-  const onSelectPokemon = useCallback(
-    (id: number) => setSelectedPokemon(id),
-    []
-  );
+  const onSelectPokemon = useCallback((id: number) => {
+    setSelectedPokemon(id);
+  }, []);
 
   const onChoosePokemon = useCallback(() => {
     refetch();
-  }, [refetch]);
+
+    if (pokemonDetailData?.data) choosePokemonUC.invoke(pokemonDetailData.data);
+  }, [refetch, pokemonDetailData?.data]);
 
   const pokemons = useMemo(
     () =>

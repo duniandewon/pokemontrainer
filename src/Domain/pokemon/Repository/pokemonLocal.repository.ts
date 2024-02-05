@@ -1,8 +1,10 @@
 import { PokemonDetail } from "../Model/PokemonDetail";
-import { Response } from "../Model/Response";
 
 export interface PokemonLocalRepository {
-  choosePokemon(pokemon: PokemonDetail): Promise<Response<null>>;
+  choosePokemon(pokemon: PokemonDetail): void;
 
-  evolvePokemon(pokemon: PokemonDetail): Promise<Response<PokemonDetail>>;
+  evolvePokemon(
+    prevPokemonId: number,
+    evolveToPokemon: PokemonDetail
+  ): PokemonDetail;
 }
