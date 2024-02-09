@@ -46,7 +46,7 @@ export function localStorageManager<T>(table: string) {
         return it;
       }) as T[];
 
-      setTable(updatedItems);
+      setTable(JSON.stringify(updatedItems));
     },
 
     remove<T extends ITable>(id: number) {
@@ -54,7 +54,7 @@ export function localStorageManager<T>(table: string) {
 
       const filteredItems = items.filter((it: ITable) => it.id !== id) as T[];
 
-      setTable(filteredItems);
+      setTable(JSON.stringify(filteredItems));
     },
   };
 }

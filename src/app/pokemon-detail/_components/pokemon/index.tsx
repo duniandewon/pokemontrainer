@@ -1,25 +1,27 @@
+import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-import { usePokemonDetailVM } from "./usePokemonDetailVM";
 
-interface Props {
-  id: number;
-}
+import { usePokemonVM } from "./usePokemonVM";
 
-export function PokemonDetail({ id }: Props) {
-  const { data: pokemon, readyToEvolve } = usePokemonDetailVM(id);
+export function Pokemon() {
+  const { myPokemon, isFetching, readyToEvolve } = usePokemonVM();
 
-  if (!pokemon) return;
+  if (isFetching) return <h2>Loading...</h2>;
+
+  if (!myPokemon) return <h2>Choose a pokemon first</h2>;
 
   return (
     <Card className="border-transparent max-w-72 mx-auto">
       <CardHeader className="gap-4">
-        <CardTitle className="capitalize text-center">{pokemon.name}</CardTitle>
+        <CardTitle className="capitalize text-center">
+          {myPokemon.name}
+        </CardTitle>
         <div>
           <Image
-            src={pokemon.image}
-            alt={pokemon.name}
+            src={myPokemon.image}
+            alt={myPokemon.name}
             className="mx-auto"
             width={150}
             height={150}
@@ -29,7 +31,7 @@ export function PokemonDetail({ id }: Props) {
       </CardHeader>
       <CardContent>
         <ul className="grid gap-2 capitalize">
-          {Object.entries(pokemon.stats).map(([key, value]) => (
+          {Object.entries(myPokemon.stats).map(([key, value]) => (
             <li key={key} className="grid grid-cols-[1fr_auto_auto] gap-2">
               <p>{key}</p>
               <p>:</p>

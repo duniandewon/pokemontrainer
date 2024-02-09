@@ -15,6 +15,7 @@ import { getPokemonDetailUseCase } from "@/Domain/pokemon/UseCase/getPokemonDeta
 
 import { useGetPokemonDetail } from "./useGetPokemonDetail";
 import { choosePokemonUseCase } from "@/Domain/pokemon/UseCase/choosePokemon.usecase";
+import { useRouter } from "next/navigation";
 
 const pokmeonsApi = pokemonsApiImpl();
 const pokemonDb = pokemonDataBaseImpl();
@@ -28,6 +29,8 @@ const choosePokemonUC = choosePokemonUseCase(pokemonLocalRepo);
 export function usePokemonsVM() {
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState(-1);
+
+  const router = useRouter();
 
   const limit = useRef(40);
   const lastPokemon = useRef<HTMLLIElement>(null);
@@ -55,10 +58,7 @@ export function usePokemonsVM() {
     fetchNextPage,
   } = useGetPokemons(limit.current, searchDebounced, fetchPokemons);
 
-  const {
-    data: pokemonDetailData,
-    refetch,
-  } = useGetPokemonDetail(selectedPokemon, getPokemonDetail);
+  const { refetch } = useGetPokemonDetail(selectedPokemon, getPokemonDetail);
 
   const onSearchPokemons = useCallback((search: string) => {
     setSearch(search);
@@ -68,11 +68,14 @@ export function usePokemonsVM() {
     setSelectedPokemon(id);
   }, []);
 
-  const onChoosePokemon = useCallback(() => {
-    refetch();
+  const onChoosePokemon = useCallback(async () => {
+    const { data } = await refetch();
 
-    if (pokemonDetailData?.data) choosePokemonUC.invoke(pokemonDetailData.data);
-  }, [refetch, pokemonDetailData?.data]);
+    if (data?.data) {
+      choosePokemonUC.invoke(data?.data);
+      router.push("/pokemon-detail");
+    }
+  }, [refetch, router]);
 
   const pokemons = useMemo(
     () =>
