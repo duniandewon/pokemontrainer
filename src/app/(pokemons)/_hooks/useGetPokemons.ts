@@ -1,24 +1,23 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { getPokemonsUseCase } from "@/Domain/pokemon/UseCase/getPokemons.usecase";
-import { pokemonRemoteRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRemoteRepositoryImpl";
-import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/remote/api/PokemonApi";
+import { GetPokemonsUseCase, getPokemonsUseCase } from "@/Domain/pokemon/UseCase/getPokemons.usecase";
 
-const pokmeonsApi = pokemonsApiImpl();
-const pokemonsRemoteRepo = pokemonRemoteRepositoryImpl(pokmeonsApi);
-const getPokemonsUC = getPokemonsUseCase(pokemonsRemoteRepo);
+export function useGetPokemons(
+  limit: number,
+  search: string = "",
+  getPokemonsUC: GetPokemonsUseCase = getPokemonsUseCase()
+) {
+  const fetchPokemons = async (
+    limit: number,
+    offset: number,
+    search: string
+  ) => {
+    const pokemons = await getPokemonsUC.invoke(limit, offset, search);
 
-export function useGetPokemons(limit: number, search: string = "") {
-  const fetchPokemons = useCallback(
-    async (limit: number, offset: number, search: string) => {
-      const pokemons = await getPokemonsUC.invoke(limit, offset, search);
-
-      return pokemons;
-    },
-    []
-  );
+    return pokemons;
+  };
 
   const { data, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: ["pokemons", search],
@@ -34,7 +33,10 @@ export function useGetPokemons(limit: number, search: string = "") {
     [data?.pages]
   );
 
-  const hasNext = useMemo(() => data?.pages[0].meta?.hasNext || false, [data?.pages]);
+  const hasNext = useMemo(
+    () => data?.pages[0].meta?.hasNext || false,
+    [data?.pages]
+  );
 
   return {
     pokemons,

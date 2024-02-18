@@ -2,15 +2,14 @@ import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getPokemonDetailUseCase } from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
-import { pokemonRemoteRepositoryImpl } from "@/Data/pokemon/Repository/PokemonRemoteRepositoryImpl";
-import { pokemonsApiImpl } from "@/Data/pokemon/DataSource/remote/api/PokemonApi";
+import {
+  GetPokemonDetailsUseCase,
+  getPokemonDetailUseCase,
+} from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
 
-const pokmeonsApi = pokemonsApiImpl();
-const pokemonsRemoteRepo = pokemonRemoteRepositoryImpl(pokmeonsApi);
-const getPokemonDetailUC = getPokemonDetailUseCase(pokemonsRemoteRepo);
-
-export function useGetPokemonDetail() {
+export function useGetPokemonDetail(
+  getPokemonDetailUC: GetPokemonDetailsUseCase = getPokemonDetailUseCase()
+) {
   const [selectedPokemon, setSelectedPokemon] = useState(-1);
 
   const getPokemonDetail = async (id: number) => {

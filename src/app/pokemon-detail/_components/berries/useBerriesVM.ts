@@ -2,28 +2,30 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { berriesApiImpl } from "@/Data/berries/DataSource/Api/BerriesApiImpl";
-import { berriesRepositoryImpl } from "@/Data/berries/Repository/BerriesRepositoryImpl";
-import { pokemonDataBaseImpl } from "@/Data/pokemon/DataSource/local/db/PokemonsDatabse";
-import { pokemonLocalRepositoryImpl } from "@/Data/pokemon/Repository/pokemonLocalRepositoryImpl.ts";
+import {
+  GetBerriesUseCase,
+  getBerriesUseCase,
+} from "@/Domain/berries/UseCase/getBerries.usecase";
 
-import { getBerriesUseCase } from "@/Domain/berries/UseCase/getBerries.usecase";
-import { getMyPokemonUseCase } from "@/Domain/pokemon/UseCase/getMyPokemon.usecase";
-import { feedPokemonUseCase } from "@/Domain/pokemon/UseCase/feedPokemon.usecase";
-import { useFeedPokemon } from "./useFeedPokemon";
+import {
+  GetMyPokemonUseCase,
+  getMyPokemonUseCase,
+} from "@/Domain/pokemon/UseCase/getMyPokemon.usecase";
+
+import {
+  FeedPokemonUseCase,
+  feedPokemonUseCase,
+} from "@/Domain/pokemon/UseCase/feedPokemon.usecase";
+
 import { PokemonDetail } from "@/Domain/pokemon/Model/PokemonDetail";
 
-const berriesApi = berriesApiImpl();
-const berriesRepoImpl = berriesRepositoryImpl(berriesApi);
+import { useFeedPokemon } from "./useFeedPokemon";
 
-const pokemonDb = pokemonDataBaseImpl();
-const pokemonLocalRepo = pokemonLocalRepositoryImpl(pokemonDb);
-
-const getBerriesUC = getBerriesUseCase(berriesRepoImpl);
-const getMyPokemonUC = getMyPokemonUseCase(pokemonLocalRepo);
-const feedPokemonUC = feedPokemonUseCase(pokemonLocalRepo);
-
-export function useBerriesVM() {
+export function useBerriesVM(
+  getBerriesUC: GetBerriesUseCase = getBerriesUseCase(),
+  getMyPokemonUC: GetMyPokemonUseCase = getMyPokemonUseCase(),
+  feedPokemonUC: FeedPokemonUseCase = feedPokemonUseCase()
+) {
   const [mealFirmnes, setMealFirmnes] = useState("");
 
   const lastBerry = useRef<HTMLLIElement>(null);

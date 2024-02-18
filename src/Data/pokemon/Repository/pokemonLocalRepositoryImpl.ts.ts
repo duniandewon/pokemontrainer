@@ -2,9 +2,10 @@ import { pokemonDao } from "../DataSource/local/dao/pokemonDao";
 
 import { PokemonLocalRepository } from "@/Domain/pokemon/Repository/pokemonLocal.repository";
 import { mapFromLocal } from "../DataSource/local/mapper/pokemonLocalMapper";
+import { pokemonDataBaseImpl } from "../DataSource/local/db/PokemonsDatabse";
 
 export function pokemonLocalRepositoryImpl(
-  pokemonDao: pokemonDao
+  pokemonDao: pokemonDao = pokemonDataBaseImpl()
 ): PokemonLocalRepository {
   return {
     getMyPokemon() {

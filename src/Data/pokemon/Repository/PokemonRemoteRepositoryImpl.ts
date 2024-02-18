@@ -3,9 +3,10 @@ import { mapFromReomtePokemons } from "../DataSource/remote/mapper/mapFromReomte
 import { mapFromReomtePokemonDetail } from "../DataSource/remote/mapper/mapFromReomtePokemonDetail";
 
 import { PokemonRemoteRepository } from "@/Domain/pokemon/Repository/pokemonRemote.repository";
+import { pokemonsApiImpl } from "../DataSource/remote/api/PokemonApi";
 
 export function pokemonRemoteRepositoryImpl(
-  dataSource: PokemonServices
+  dataSource: PokemonServices = pokemonsApiImpl()
 ): PokemonRemoteRepository {
   const getPokemons = async (
     limit: number,
