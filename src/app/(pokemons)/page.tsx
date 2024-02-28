@@ -17,6 +17,7 @@ export default function Home() {
     onSearchPokemons,
     onSelectPokemon,
     onChoosePokemon,
+    fetchNextPage,
   } = usePokemonsVM();
 
   const handleOnChange = useCallback(
@@ -28,6 +29,10 @@ export default function Home() {
     onChoosePokemon();
   }, [onChoosePokemon]);
 
+  const handleOnLoadMore = () => {
+    fetchNextPage();
+  };
+
   return (
     <div className="h-full px-4 py-5 grid grid-rows-[auto_1fr_auto] gap-4">
       <header>
@@ -37,6 +42,7 @@ export default function Home() {
         <PokemonsList
           pokemons={pokemons}
           hasNext={hasNext}
+          onLoadMore={handleOnLoadMore}
           onSelectPokemon={onSelectPokemon}
           selectedPokemonId={selectedPokemon}
         />

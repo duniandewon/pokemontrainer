@@ -5,7 +5,7 @@ import { useSearch } from "./_hooks/useSearch";
 import { useChoosePokemon } from "./_hooks/useChoosePokemon";
 
 export function usePokemonsVM() {
-  const limit = useRef(9999);
+  const limit = useRef(40);
 
   const { searchDebounced, onSearchPokemons } = useSearch();
 
