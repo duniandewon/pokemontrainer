@@ -7,11 +7,10 @@ import { Berry } from "@/Domain/berries/Model/Berry";
 
 interface Props {
   berry: Berry;
-  isEnabled: boolean;
   onChange(value: string): void;
 }
 
-export function Berry({ berry, isEnabled, onChange }: Props) {
+export function Berry({ berry, onChange }: Props) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -25,7 +24,6 @@ export function Berry({ berry, isEnabled, onChange }: Props) {
         value={berry.firmness}
         onChange={handleChange}
         className={style.berry__input}
-        disabled={isEnabled}
       />
       <label htmlFor={berry.id.toString()} className={style.berry__label}>
         <Image width={50} height={50} src={berry.image} alt={berry.name} />

@@ -39,11 +39,7 @@ export function Berries() {
             key={berry.id}
             ref={prevBerries.length - 1 === i && hasNext ? lastBerry : null}
           >
-            <Berry
-              berry={berry}
-              isEnabled={readyToEvolve}
-              onChange={handleChange}
-            />
+            <Berry berry={berry} onChange={handleChange} />
           </li>
         ))}
       </ul>
