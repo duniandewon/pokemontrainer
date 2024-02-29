@@ -2,7 +2,7 @@ import { pokemonLocalRepositoryImpl } from "@/Data/pokemon/Repository/pokemonLoc
 import { PokemonDetail } from "../Model/PokemonDetail";
 import { PokemonLocalRepository } from "../Repository/pokemonLocal.repository";
 
-interface EvolvePokemonUseCase {
+export interface EvolvePokemonUseCase {
   invoke(prevPokemonId: number, evolveToPokemon: PokemonDetail): PokemonDetail;
 }
 

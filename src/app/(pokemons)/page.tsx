@@ -16,7 +16,7 @@ export default function Home() {
     selectedPokemon,
     onSearchPokemons,
     onSelectPokemon,
-    onChoosePokemon,
+    choosePokemon,
     fetchNextPage,
   } = usePokemonsVM();
 
@@ -26,8 +26,8 @@ export default function Home() {
   );
 
   const handleChoosePokemon = useCallback(() => {
-    onChoosePokemon();
-  }, [onChoosePokemon]);
+    choosePokemon();
+  }, [choosePokemon]);
 
   const handleOnLoadMore = () => {
     fetchNextPage();

@@ -1,26 +1,19 @@
 import { useRouter } from "next/navigation";
 
-import { useGetPokemonDetail } from "./useGetPokemonDetail";
-
 import { choosePokemonUseCase } from "@/Domain/pokemon/UseCase/choosePokemon.usecase";
 
-export function useChoosePokemon(choosePokemonUC = choosePokemonUseCase()) {
-  const { refetch, onSelectPokemon, selectedPokemon } = useGetPokemonDetail();
+import { PokemonDetail } from "@/Domain/pokemon/Model/PokemonDetail";
 
+export function useChoosePokemon(choosePokemonUC = choosePokemonUseCase()) {
   const router = useRouter();
 
-  const onChoosePokemon = async () => {
-    const { data } = await refetch();
+  const onChoosePokemon = (pokemon: PokemonDetail) => {
+    choosePokemonUC.invoke(pokemon);
 
-    if (data?.data) {
-      choosePokemonUC.invoke(data?.data);
-      router.push("/pokemon-detail");
-    }
+    router.push("/pokemon-detail");
   };
 
   return {
-    onSelectPokemon,
-    selectedPokemon,
     onChoosePokemon,
   };
 }

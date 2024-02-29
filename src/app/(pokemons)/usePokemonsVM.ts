@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useGetPokemons } from "./_hooks/useGetPokemons";
 import { useSearch } from "./_hooks/useSearch";
 import { useChoosePokemon } from "./_hooks/useChoosePokemon";
+import { useGetPokemonDetail } from "@/hooks/useGetPokemonDetail";
 
 export function usePokemonsVM() {
   const limit = useRef(40);
@@ -14,8 +15,17 @@ export function usePokemonsVM() {
     searchDebounced
   );
 
-  const { onChoosePokemon, onSelectPokemon, selectedPokemon } =
-    useChoosePokemon();
+  const { refetch, onSelectPokemon, selectedPokemon } = useGetPokemonDetail();
+
+  const { onChoosePokemon } = useChoosePokemon();
+
+  const choosePokemon = async () => {
+    const { data } = await refetch();
+
+    if (data?.data) {
+      onChoosePokemon(data.data);
+    }
+  };
 
   return {
     pokemons,
@@ -23,7 +33,7 @@ export function usePokemonsVM() {
     isFetching,
     selectedPokemon,
     fetchNextPage,
-    onChoosePokemon,
+    choosePokemon,
     onSearchPokemons,
     onSelectPokemon,
   };
