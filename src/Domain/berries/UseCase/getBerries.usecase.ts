@@ -1,10 +1,10 @@
 import { berriesRepositoryImpl } from "@/Data/berries/Repository/BerriesRepositoryImpl";
-import { Berry } from "../Model/Berry";
+import { Berries } from "../Model/Berry";
 
 import { BerriesRepository } from "../Repository/berry.repository";
 
 export interface GetBerriesUseCase {
-  invoke(limit: number, offset: number): Promise<Berry>;
+  invoke(limit: number, offset: number): Promise<Berries>;
 }
 
 export function getBerriesUseCase(

@@ -3,10 +3,10 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { usePokemonVM } from "./usePokemonVM";
+import { usePokemonDetailVM } from "../../usePokemonDetailVM";
 
 export function Pokemon() {
-  const { myPokemon, isFetching, readyToEvolve } = usePokemonVM();
+  const { data: myPokemon, isFetching, readyToEvolve } = usePokemonDetailVM();
 
   if (isFetching) return <h2>Loading...</h2>;
 

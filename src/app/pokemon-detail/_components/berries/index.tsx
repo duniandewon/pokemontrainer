@@ -1,29 +1,32 @@
-import Image from "next/image";
-
-import { useBerriesVM } from "./useBerriesVM";
-
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import style from "./berries.module.css";
+import { usePokemonDetailVM } from "../../usePokemonDetailVM";
+
+import { Berry } from "./Berry";
 
 export function Berries() {
-  const { berries, hasNext, lastBerry, onFeedPokemon, setMealFirmnes } =
-    useBerriesVM();
+  const {
+    berries,
+    hasNext,
+    lastBerry,
+    feedPokemon,
+    setMealFirmnes,
+    readyToEvolve,
+  } = usePokemonDetailVM();
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      onFeedPokemon();
+      feedPokemon();
     },
-    [onFeedPokemon]
+    [feedPokemon]
   );
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setMealFirmnes(e.target.value);
+    (value: string) => {
+      setMealFirmnes(value);
     },
     [setMealFirmnes]
   );
@@ -36,31 +39,15 @@ export function Berries() {
             key={berry.id}
             ref={prevBerries.length - 1 === i && hasNext ? lastBerry : null}
           >
-            <div className={style.berry}>
-              <input
-                type="radio"
-                id={berry.id.toString()}
-                name="berry"
-                value={berry.firmness}
-                onChange={handleChange}
-                className={style.berry__input}
-              />
-              <label
-                htmlFor={berry.id.toString()}
-                className={style.berry__label}
-              >
-                <Image
-                  width={50}
-                  height={50}
-                  src={berry.image}
-                  alt={berry.name}
-                />
-              </label>
-            </div>
+            <Berry
+              berry={berry}
+              isEnabled={readyToEvolve}
+              onChange={handleChange}
+            />
           </li>
         ))}
       </ul>
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="w-full" disabled={readyToEvolve}>
         Feed Pokemon
       </Button>
     </form>

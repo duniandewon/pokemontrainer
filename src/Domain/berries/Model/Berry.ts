@@ -1,4 +1,4 @@
-interface Data {
+export interface Berry {
   id: number;
   name: string;
   firmness: string;
@@ -10,7 +10,7 @@ interface Meta {
   nextOffset: number;
 }
 
-export interface Berry {
-  data: Data[];
+export interface Berries {
+  data: Berry[];
   meta: Meta;
 }

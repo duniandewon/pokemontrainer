@@ -1,5 +1,5 @@
-import { Berry } from "../Model/Berry";
+import { Berries } from "../Model/Berry";
 
 export interface BerriesRepository {
-  getBerries(limit: number, offset:number): Promise<Berry>;
+  getBerries(limit: number, offset: number): Promise<Berries>;
 }
