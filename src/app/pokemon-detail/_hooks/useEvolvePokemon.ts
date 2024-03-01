@@ -7,14 +7,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useEvolvePokemon(
   prevPokemonId: number,
-  evolvedPokemon: PokemonDetail,
   evolvePokemonUC: EvolvePokemonUseCase = evolvePokemonUseCase()
 ) {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: async () =>
-      evolvePokemonUC.invoke(prevPokemonId, evolvedPokemon),
+    mutationFn: async (evolvedPokemon: PokemonDetail) => {
+      return evolvePokemonUC.invoke(prevPokemonId, evolvedPokemon);
+    },
     onMutate: async (pokemon: PokemonDetail) => {
       await queryClient.cancelQueries({ queryKey: ["my-pokemon"] });
 
@@ -40,7 +40,7 @@ export function useEvolvePokemon(
     },
   });
 
-  const evolvePokemon = () => {
+  const evolvePokemon = (evolvedPokemon: PokemonDetail) => {
     mutate(evolvedPokemon);
   };
 

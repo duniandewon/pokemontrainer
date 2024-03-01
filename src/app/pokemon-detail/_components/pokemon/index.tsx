@@ -6,7 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePokemonDetailVM } from "../../usePokemonDetailVM";
 
 export function Pokemon() {
-  const { data: myPokemon, isFetching, readyToEvolve } = usePokemonDetailVM();
+  const {
+    data: myPokemon,
+    isFetching,
+    readyToEvolve,
+    onEvolvePokemon,
+  } = usePokemonDetailVM();
 
   if (isFetching) return <h2>Loading...</h2>;
 
@@ -27,7 +32,11 @@ export function Pokemon() {
             height={150}
           />
         </div>
-        {readyToEvolve ? <Button className="w-full">Evolve now</Button> : null}
+        {readyToEvolve ? (
+          <Button className="w-full" onClick={onEvolvePokemon}>
+            Evolve now
+          </Button>
+        ) : null}
       </CardHeader>
       <CardContent>
         <ul className="grid gap-2 capitalize">

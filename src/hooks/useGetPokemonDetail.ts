@@ -8,10 +8,9 @@ import {
 } from "@/Domain/pokemon/UseCase/getPokemonDetails.usecase";
 
 export function useGetPokemonDetail(
+  pokemonId: number,
   getPokemonDetailUC: GetPokemonDetailsUseCase = getPokemonDetailUseCase()
 ) {
-  const [selectedPokemon, setSelectedPokemon] = useState(-1);
-
   const getPokemonDetail = async (id: number) => {
     const pokemon = await getPokemonDetailUC.invoke(id);
 
@@ -19,18 +18,11 @@ export function useGetPokemonDetail(
   };
 
   const { refetch } = useQuery({
-    queryKey: ["pokemon-detail", selectedPokemon],
-    queryFn: () => getPokemonDetail(selectedPokemon),
-    enabled: false,
+    queryKey: ["pokemon-detail", pokemonId],
+    queryFn: () => getPokemonDetail(pokemonId),
   });
 
-  const onSelectPokemon = (id: number) => {
-    setSelectedPokemon(id);
-  };
-
   return {
-    selectedPokemon,
-    onSelectPokemon,
     refetch,
   };
 }

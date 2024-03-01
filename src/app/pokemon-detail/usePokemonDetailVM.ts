@@ -1,20 +1,27 @@
-import { useMemo } from "react";
 import { useFeedPokemon } from "./_hooks/useFeedpokemon";
 import { useGetBerries } from "./_hooks/useGetBerries";
 import { useGetMyPokemon } from "./_hooks/useGetMyPokemon";
+import { useGetPokemonDetail } from "@/hooks/useGetPokemonDetail";
+import { useEvolvePokemon } from "./_hooks/useEvolvePokemon";
 
 export function usePokemonDetailVM() {
-  const { data, isFetching } = useGetMyPokemon();
+  const { data, isFetching, readyToEvolve } = useGetMyPokemon();
 
   const { berries, hasNext, lastBerry } = useGetBerries();
 
   const { feedPokemon, setMealFirmnes } = useFeedPokemon(data);
 
-  const readyToEvolve = useMemo(() => {
-    if (!data) return false;
+  const { refetch } = useGetPokemonDetail(data?.nextEvolution!!);
 
-    return data?.stats.weight >= data?.maxWeight;
-  }, [data]);
+  const { evolvePokemon } = useEvolvePokemon(data?.id!!);
+
+  const onEvolvePokemon = async () => {
+    const { data: newPokemon } = await refetch();
+
+    if (newPokemon?.data) {
+      evolvePokemon(newPokemon.data);
+    }
+  };
 
   return {
     data,
@@ -25,5 +32,6 @@ export function usePokemonDetailVM() {
     lastBerry,
     feedPokemon,
     setMealFirmnes,
+    onEvolvePokemon,
   };
 }

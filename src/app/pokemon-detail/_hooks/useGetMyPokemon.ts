@@ -1,8 +1,11 @@
+import { useMemo } from "react";
+
+import { useQuery } from "@tanstack/react-query";
+
 import {
   GetMyPokemonUseCase,
   getMyPokemonUseCase,
 } from "@/Domain/pokemon/UseCase/getMyPokemon.usecase";
-import { useQuery } from "@tanstack/react-query";
 
 export function useGetMyPokemon(
   getMyPokemonUC: GetMyPokemonUseCase = getMyPokemonUseCase()
@@ -11,8 +14,20 @@ export function useGetMyPokemon(
     return getMyPokemonUC.invoke();
   };
 
-  return useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["my-pokemon"],
     queryFn: () => getMyPokemon(),
   });
+
+  const readyToEvolve = useMemo(() => {
+    if (!data) return false;
+
+    return data?.stats.weight >= data?.maxWeight;
+  }, [data]);
+
+  return {
+    data,
+    isFetching,
+    readyToEvolve,
+  };
 }

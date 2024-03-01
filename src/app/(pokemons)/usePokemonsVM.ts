@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { useGetPokemons } from "./_hooks/useGetPokemons";
 import { useSearch } from "./_hooks/useSearch";
@@ -8,6 +8,8 @@ import { useGetPokemonDetail } from "@/hooks/useGetPokemonDetail";
 export function usePokemonsVM() {
   const limit = useRef(40);
 
+  const [selectedPokemon, setSelectedPokemon] = useState(0);
+
   const { searchDebounced, onSearchPokemons } = useSearch();
 
   const { pokemons, hasNext, isFetching, fetchNextPage } = useGetPokemons(
@@ -15,7 +17,9 @@ export function usePokemonsVM() {
     searchDebounced
   );
 
-  const { refetch, onSelectPokemon, selectedPokemon } = useGetPokemonDetail();
+  const { refetch } = useGetPokemonDetail(selectedPokemon);
+
+  const onSelectPokemon = (id: number) => setSelectedPokemon(id);
 
   const { onChoosePokemon } = useChoosePokemon();
 
