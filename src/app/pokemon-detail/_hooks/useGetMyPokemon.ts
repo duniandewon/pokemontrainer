@@ -22,7 +22,7 @@ export function useGetMyPokemon(
   const readyToEvolve = useMemo(() => {
     if (!data) return false;
 
-    return data?.stats.weight >= data?.maxWeight;
+    return data.stats.weight >= data.maxWeight && data.nextEvolution > 0;
   }, [data]);
 
   return {
