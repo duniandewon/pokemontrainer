@@ -41,10 +41,9 @@ export function Pokemon() {
       <CardContent>
         <ul className="grid gap-2 capitalize">
           {Object.entries(myPokemon.stats).map(([key, value]) => (
-            <li key={key} className="grid grid-cols-[1fr_auto_auto] gap-2">
+            <li key={key} className="grid grid-cols-[1fr_2.5rem] gap-2">
               <p>{key}</p>
-              <p>:</p>
-              <p className="justify-self-end">{value}</p>
+              <p className="justify-self-start">: {value}</p>
             </li>
           ))}
         </ul>
