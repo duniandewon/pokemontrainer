@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback } from "react";
 
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,8 @@ import { PokemonsList } from "./_components/PokemonsList";
 import { usePokemonsVM } from "./usePokemonsVM";
 
 export default function Home() {
+  const router = useRouter();
+
   const {
     pokemons,
     hasNext,
@@ -20,14 +23,14 @@ export default function Home() {
     fetchNextPage,
   } = usePokemonsVM();
 
-  const handleOnChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => onSearchPokemons(e.target.value),
-    [onSearchPokemons]
-  );
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) =>
+    onSearchPokemons(e.target.value);
 
-  const handleChoosePokemon = useCallback(() => {
+  const handleChoosePokemon = () => {
     choosePokemon();
-  }, [choosePokemon]);
+
+    router.push("/pokemon-detail");
+  };
 
   const handleOnLoadMore = () => {
     fetchNextPage();
