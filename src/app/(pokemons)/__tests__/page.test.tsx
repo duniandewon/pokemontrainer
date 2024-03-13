@@ -35,11 +35,13 @@ describe("Page", () => {
   });
 
   it("renders properly", () => {
-    render(
+    const {asFragment} = render(
       <QueryClientProvider client={queryClient}>
         <Page />
       </QueryClientProvider>
     );
+
+    expect(asFragment).toMatchSnapshot()
   });
 
   it("renders a list of pokemon", () => {

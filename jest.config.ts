@@ -14,7 +14,7 @@ const config: Config = {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   testEnvironment: "jsdom",
-  collectCoverageFrom: ["<rootDir>/src/**/*.{ts,js}"],
+  collectCoverageFrom: ["<rootDir>/src/**/*.{tsx,ts}"],
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
 };
 
