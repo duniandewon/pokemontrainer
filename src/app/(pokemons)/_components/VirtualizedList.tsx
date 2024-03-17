@@ -21,7 +21,10 @@ export function VirtualizedList({
   onLoadMore,
   onSelectPokemon,
 }: Props) {
-  const isItemsLoaded = (index: number) => !hasNext || !!pokemons[index];
+  const isItemsLoaded = useCallback(
+    (index: number) => !hasNext || !!pokemons[index],
+    [hasNext, pokemons]
+  );
 
   const itemCount = useMemo(
     () => (hasNext ? pokemons.length + 1 : pokemons.length),
@@ -33,10 +36,6 @@ export function VirtualizedList({
     []
   );
 
-  const loadMoreItems = async () => {
-    onLoadMore();
-  };
-
   return (
     <div className="h-full w-full">
       <AutoSizer>
@@ -44,13 +43,13 @@ export function VirtualizedList({
           <InfiniteLoader
             isItemLoaded={isItemsLoaded}
             itemCount={itemCount}
-            loadMoreItems={loadMoreItems}
+            loadMoreItems={onLoadMore}
           >
             {({ onItemsRendered, ref }) => (
               <Grid
                 ref={ref}
                 columnCount={4}
-                columnWidth={width/4}
+                columnWidth={width / 4}
                 rowHeight={100}
                 rowCount={pokemons.length}
                 width={width}
