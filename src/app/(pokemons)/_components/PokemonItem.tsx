@@ -9,11 +9,11 @@ interface Props {
 export function PokemonItem({ pokemon, isSelected }: Props) {
   return (
     <div
-      className={`cursor-pointer border hover:border-slate-300 p-2 ${
-        isSelected ? "border-slate-300" : "border-transparent"
+      className={`flex justify-center items-center cursor-pointer border h-full w-full relative ${
+        isSelected ? "border-slate-300" : "border-transparent hover:border-slate-500"
       }`}
     >
-      <Image src={pokemon.image} alt={pokemon.name} width={150} height={150} />
+      <Image src={pokemon.image} alt={pokemon.name} width={80} height={80} layout="reponsive" />
     </div>
   );
 }
