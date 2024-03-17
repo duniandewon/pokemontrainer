@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PokemonsList } from "./_components/PokemonsList";
 
 import { usePokemonsVM } from "./usePokemonsVM";
+import { VirtualizedList } from "./_components/VirtualizedList";
 
 export default function Home() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Home() {
         <Input placeholder="Search pokemons" onChange={handleOnChange} />
       </header>
       <main className="overflow-y-auto">
-        <PokemonsList
+        <VirtualizedList
           pokemons={pokemons}
           hasNext={hasNext}
           onLoadMore={handleOnLoadMore}
