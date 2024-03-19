@@ -38,10 +38,7 @@ export function VirtualizedList({
 
   return (
     <div className="h-full w-full">
-      <AutoSizer
-        defaultWidth={500}
-        style={{ height: "100%", position: "relative", width: "100%" }}
-      >
+      <AutoSizer>
         {({ height, width }) => (
           <InfiniteLoader
             isItemLoaded={isItemsLoaded}
@@ -92,15 +89,19 @@ export function VirtualizedList({
 
                   const pokemon = pokemons[index];
 
-                  if (!pokemon) return;
-
                   return (
-                    <div style={style}>
-                      <PokemonItem
-                        onClick={onSelectPokemon}
-                        pokemon={pokemon}
-                        isSelected={pokemon.id === selectedPokemonId}
-                      />
+                    <div
+                      style={style}
+                      onClick={() => onSelectPokemon(pokemon.id)}
+                    >
+                      {pokemon ? (
+                        <PokemonItem
+                          pokemon={pokemon}
+                          isSelected={pokemon.id === selectedPokemonId}
+                        />
+                      ) : (
+                        "loading.."
+                      )}
                     </div>
                   );
                 }}
