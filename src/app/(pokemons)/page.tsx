@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PokemonsList } from "./_components/PokemonsList";
 
 import { usePokemonsVM } from "./usePokemonsVM";
+import { PokemonsListSekeleton } from "./_components/PokemonsListSekeleton";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function Home() {
     onSelectPokemon,
     choosePokemon,
     fetchNextPage,
+    isFetching,
   } = usePokemonsVM();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -49,6 +51,7 @@ export default function Home() {
           onSelectPokemon={onSelectPokemon}
           selectedPokemonId={selectedPokemon}
         />
+        {isFetching && <PokemonsListSekeleton />}
       </main>
       <footer>
         <Button
