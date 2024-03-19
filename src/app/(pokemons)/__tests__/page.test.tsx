@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
-
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Page from "../page";
 
+import "@/__mocks__/intersectionObserverMock";
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -16,9 +15,8 @@ jest.mock("next/navigation", () => ({
 jest.mock("../usePokemonsVM", () => ({
   usePokemonsVM: () => ({
     pokemons: [
-      { id: 1, name: "Bulbasaur", image: "/bulbasaur.png" },
-      { id: 2, name: "Charmander", image: "/charmander.png" },
-      { id: 3, name: "Squirtle", image: "/squirtle.png" },
+      { id: 1, name: "Bulbasaur" },
+      { id: 2, name: "Charmander" },
     ],
     hasNext: true,
     selectedPokemon: -1,
@@ -26,21 +24,6 @@ jest.mock("../usePokemonsVM", () => ({
     onSelectPokemon: jest.fn(),
     choosePokemon: jest.fn(),
     fetchNextPage: jest.fn(),
-  }),
-}));
-
-type AutoSizerModule = typeof import("react-virtualized-auto-sizer");
-
-jest.mock<AutoSizerModule>("react-virtualized-auto-sizer", () => ({
-  __esModule: true,
-  ...jest.requireActual<AutoSizerModule>("react-virtualized-auto-sizer"),
-  default: jest.fn().mockImplementation(({ children }) => {
-    return (children as (size: { width: number; height: number }) => ReactNode)(
-      {
-        width: 500,
-        height: 1000,
-      }
-    );
   }),
 }));
 
@@ -52,13 +35,13 @@ describe("Page", () => {
   });
 
   it("renders properly", () => {
-    const { asFragment } = render(
+    const {asFragment} = render(
       <QueryClientProvider client={queryClient}>
         <Page />
       </QueryClientProvider>
     );
 
-    expect(asFragment).toMatchSnapshot();
+    expect(asFragment).toMatchSnapshot()
   });
 
   it("renders a list of pokemon", () => {
