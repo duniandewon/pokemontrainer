@@ -2,7 +2,10 @@ import { useMemo } from "react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { GetPokemonsUseCase, getPokemonsUseCase } from "@/Domain/pokemon/UseCase/getPokemons.usecase";
+import {
+  GetPokemonsUseCase,
+  getPokemonsUseCase,
+} from "@/Domain/pokemon/UseCase/getPokemons.usecase";
 
 export function useGetPokemons(
   limit: number,
@@ -19,14 +22,15 @@ export function useGetPokemons(
     return pokemons;
   };
 
-  const { data, isFetching, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["pokemons", search],
-    queryFn: ({ pageParam }) => fetchPokemons(limit, pageParam, search),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      return lastPage.meta?.nextOffset || 0;
-    },
-  });
+  const { data, isLoading, isFetchingNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey: ["pokemons", search],
+      queryFn: ({ pageParam }) => fetchPokemons(limit, pageParam, search),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        return lastPage.meta?.nextOffset || 0;
+      },
+    });
 
   const pokemons = useMemo(
     () => (data?.pages ? data.pages.map((page) => page.data).flat() : []),
@@ -36,6 +40,11 @@ export function useGetPokemons(
   const hasNext = useMemo(
     () => data?.pages[0].meta?.hasNext || false,
     [data?.pages]
+  );
+
+  const isFetching = useMemo(
+    () => isLoading || isFetchingNextPage,
+    [isLoading, isFetchingNextPage]
   );
 
   return {
