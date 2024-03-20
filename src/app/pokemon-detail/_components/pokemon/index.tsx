@@ -24,13 +24,19 @@ export function Pokemon() {
           {myPokemon.name}
         </CardTitle>
         <div>
-          <Image
-            src={myPokemon.image}
-            alt={myPokemon.name}
-            className="mx-auto"
-            width={150}
-            height={150}
-          />
+          {myPokemon.image ? (
+            <Image
+              src={myPokemon.image}
+              alt={myPokemon.name}
+              className="mx-auto"
+              width={150}
+              height={150}
+            />
+          ) : (
+            <h2 className="text-sm text-center">
+              {myPokemon.name} image palace holder
+            </h2>
+          )}
         </div>
         {readyToEvolve ? (
           <Button className="w-full" onClick={onEvolvePokemon}>
