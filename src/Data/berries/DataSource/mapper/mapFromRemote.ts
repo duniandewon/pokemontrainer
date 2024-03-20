@@ -1,7 +1,12 @@
-import { Berry } from "@/Domain/berries/Model/Berry";
-import { BerryEntity } from "../Entity/BerryEntity";
+import { Response as RemoteResponse } from "@/Data/shared/Response";
+import { Data } from "../Entity/Berries";
 
-export function entityToBerriesDto(BerryEntity: BerryEntity): Berry {
+import { Berry } from "@/Domain/berries/Model/Berry";
+import { Response } from "@/Domain/shared/Response";
+
+export function mapFromRemote(
+  BerryEntity: RemoteResponse<Data>
+): Response<Berry[]> {
   return {
     data: BerryEntity.data.pokemon_v2_berry.map((berry) => ({
       id: berry.pokemon_v2_item.id,
@@ -10,8 +15,8 @@ export function entityToBerriesDto(BerryEntity: BerryEntity): Berry {
       image: berry.pokemon_v2_item.pokemon_v2_itemsprites[0].sprites.default,
     })),
     meta: {
-      hasNext: BerryEntity.meta.hasNext,
-      nextOffset: BerryEntity.meta.nextOffset,
+      hasNext: BerryEntity.meta?.hasNext || false,
+      nextOffset: BerryEntity.meta?.nextOffset || 0,
     },
   };
 }

@@ -4,13 +4,3 @@ export interface Berry {
   firmness: string;
   image: string;
 }
-
-interface Meta {
-  hasNext: boolean;
-  nextOffset: number;
-}
-
-export interface Berries {
-  data: Berry[];
-  meta: Meta;
-}

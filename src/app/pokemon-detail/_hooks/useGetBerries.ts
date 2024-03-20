@@ -20,7 +20,7 @@ export function useGetBerries(
     queryKey: ["berries"],
     initialPageParam: 0,
     queryFn: ({ pageParam }) => getBerries(limit.current, pageParam),
-    getNextPageParam: (lastPage) => lastPage.meta.nextOffset,
+    getNextPageParam: (lastPage) => lastPage.meta?.nextOffset,
   });
 
   const berries = useMemo(
@@ -28,7 +28,7 @@ export function useGetBerries(
     [data?.pages]
   );
 
-  const hasNext = useMemo(() => data?.pages[0].meta.hasNext, [data?.pages]);
+  const hasNext = useMemo(() => data?.pages[0].meta?.hasNext, [data?.pages]);
 
   const handleIntersectinObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
