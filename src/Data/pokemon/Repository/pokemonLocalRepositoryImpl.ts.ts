@@ -31,5 +31,9 @@ export function pokemonLocalRepositoryImpl(
 
       return evolvedPokemon;
     },
+
+    deletepokemon(id) {
+      pokemonDao.deletePokemon(id);
+    },
   };
 }
