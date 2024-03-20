@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { ChangeEvent } from "react";
 
 import { Input } from "@/components/ui/input";
@@ -12,8 +11,6 @@ import { usePokemonsVM } from "./usePokemonsVM";
 import { PokemonsListSekeleton } from "./_components/PokemonsListSekeleton";
 
 export default function Home() {
-  const router = useRouter();
-
   const {
     pokemons,
     hasNext,
@@ -30,8 +27,6 @@ export default function Home() {
 
   const handleChoosePokemon = () => {
     choosePokemon();
-
-    router.push("/pokemon-detail");
   };
 
   const handleOnLoadMore = () => {
@@ -41,7 +36,11 @@ export default function Home() {
   return (
     <div className="h-full px-4 py-5 grid grid-rows-[auto_1fr_auto] gap-4">
       <header>
-        <Input placeholder="Search pokemons" onChange={handleOnChange} />
+        <Input
+          placeholder="Search pokemons"
+          onChange={handleOnChange}
+          disabled={isFetching}
+        />
       </header>
       <main className="overflow-y-auto">
         <PokemonsList
@@ -54,13 +53,15 @@ export default function Home() {
         {isFetching && <PokemonsListSekeleton />}
       </main>
       <footer>
-        <Button
-          className="w-full"
-          disabled={selectedPokemon < 0}
-          onClick={handleChoosePokemon}
-        >
-          Choose Me
-        </Button>
+        {!isFetching && (
+          <Button
+            className="w-full"
+            disabled={selectedPokemon < 0}
+            onClick={handleChoosePokemon}
+          >
+            Choose Me
+          </Button>
+        )}
       </footer>
     </div>
   );
