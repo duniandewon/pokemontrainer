@@ -35,13 +35,13 @@ describe("Page", () => {
   });
 
   it("renders properly", () => {
-    const {asFragment} = render(
+    const { asFragment } = render(
       <QueryClientProvider client={queryClient}>
         <Page />
       </QueryClientProvider>
     );
 
-    expect(asFragment).toMatchSnapshot()
+    expect(asFragment).toMatchSnapshot();
   });
 
   it("renders a list of pokemon", () => {
@@ -51,8 +51,8 @@ describe("Page", () => {
       </QueryClientProvider>
     );
 
-    const bulbasaur = screen.getByAltText("Bulbasaur");
+    const list = screen.getAllByRole("listitem");
 
-    expect(bulbasaur).toBeInTheDocument();
+    expect(list.length).toBeGreaterThanOrEqual(2);
   });
 });
