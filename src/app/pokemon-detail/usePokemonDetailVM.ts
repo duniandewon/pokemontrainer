@@ -1,8 +1,9 @@
 import { useFeedPokemon } from "./_hooks/useFeedpokemon";
 import { useGetBerries } from "./_hooks/useGetBerries";
-import { useGetMyPokemon } from "./_hooks/useGetMyPokemon";
-import { useGetPokemonDetail } from "@/hooks/useGetPokemonDetail";
+import { useGetMyPokemon } from "../../hooks/useGetMyPokemon";
 import { useEvolvePokemon } from "./_hooks/useEvolvePokemon";
+
+import { useGetPokemonDetail } from "@/hooks/useGetPokemonDetail";
 
 export function usePokemonDetailVM() {
   const { data, isFetching, readyToEvolve } = useGetMyPokemon();
