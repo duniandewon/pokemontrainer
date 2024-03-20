@@ -8,4 +8,6 @@ export interface pokemonDao {
   feedPokemon(firmness: string): PokemonDb;
 
   evolvePokemon(prevPokemonId: number, newPokemon: PokemonDb): PokemonDb;
+
+  deletePokemon(id: number): void;
 }

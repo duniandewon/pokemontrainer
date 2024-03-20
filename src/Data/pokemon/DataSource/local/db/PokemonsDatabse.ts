@@ -64,5 +64,9 @@ export function pokemonDataBaseImpl(): pokemonDao {
 
       return newPokemon;
     },
+
+    deletePokemon(id) {
+      localStorage.remove<PokemonDb>(id);
+    },
   };
 }

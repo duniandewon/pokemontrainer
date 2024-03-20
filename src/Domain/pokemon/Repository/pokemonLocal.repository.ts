@@ -11,4 +11,6 @@ export interface PokemonLocalRepository {
     prevPokemonId: number,
     evolveToPokemon: PokemonDetail
   ): PokemonDetail;
+
+  deletepokemon(id: number): void;
 }
