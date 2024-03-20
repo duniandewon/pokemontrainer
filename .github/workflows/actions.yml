@@ -4,6 +4,7 @@ on: [pull_request]
 
 jobs:
   test:
+    name: Run unit test
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,11 +13,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Use NodeJs ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: npm install
         run: npm i
+
       - name: test
         run: npm test
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: test
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use NodeJs ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Application
+        run: npm run build
