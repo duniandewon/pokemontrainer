@@ -1,16 +1,16 @@
 import { BerriesRepository } from "@/Domain/berries/Repository/berry.repository";
 
-import { BerriesDataSource } from "../DataSource/BerriesDataSource";
-import { entityToBerriesDto } from "../DataSource/Api/Dto/entityToBerriesDto";
-import { berriesApiImpl } from "../DataSource/Api/BerriesApiImpl";
+import { berriesApiImpl } from "../DataSource/api/BerriesApi";
+import { BerriesServices } from "../DataSource/services/BerriesServices";
+import { mapFromRemote } from "../DataSource/mapper/mapFromRemote";
 
 export function berriesRepositoryImpl(
-  dataSource: BerriesDataSource = berriesApiImpl()
+  dataSource: BerriesServices = berriesApiImpl()
 ): BerriesRepository {
   const getBerries = async (limit: number, offset: number) => {
     const berries = await dataSource.getBerries(limit, offset);
 
-    return entityToBerriesDto(berries);
+    return mapFromRemote(berries);
   };
 
   return {
