@@ -16,12 +16,7 @@ export function PokemonItem({ pokemon, isSelected }: Props) {
       }`}
     >
       {pokemon.image ? (
-        <Image
-          src={pokemon.image}
-          alt={pokemon.name}
-          width={150}
-          height={150}
-        />
+        <Image src={pokemon.image} alt={pokemon.name} width={86} height={86} />
       ) : (
         <h2 className="text-sm text-center">
           {pokemon.name} image place holder

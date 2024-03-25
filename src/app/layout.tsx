@@ -23,14 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "h-screen")}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <QueryClientProviders>{children}</QueryClientProviders>
-        </ThemeProvider>
+        <QueryClientProviders>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </QueryClientProviders>
       </body>
     </html>
   );
