@@ -45,7 +45,6 @@ export default function Home() {
       <main className="overflow-y-auto">
         <PokemonsList
           pokemons={pokemons}
-          hasNext={hasNext}
           onLoadMore={handleOnLoadMore}
           onSelectPokemon={onSelectPokemon}
           selectedPokemonId={selectedPokemon}
