@@ -6,7 +6,6 @@ import { PokemonItem } from "./PokemonItem";
 interface Props {
   pokemons: Pokemon[];
   selectedPokemonId: number;
-  hasNext: boolean;
   onLoadMore: () => void;
   onSelectPokemon: (pokemonId: number) => void;
 }
