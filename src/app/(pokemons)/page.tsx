@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { PokemonsList } from "./_components/PokemonsList";
+import { PokemonsListSekeleton } from "./_components/PokemonsListSekeleton";
 
 import { usePokemonsVM } from "./usePokemonsVM";
-import { PokemonsListSekeleton } from "./_components/PokemonsListSekeleton";
 
 export default function Home() {
   const {
@@ -52,15 +52,13 @@ export default function Home() {
         {isFetching && <PokemonsListSekeleton />}
       </main>
       <footer>
-        {!isFetching && (
-          <Button
-            className="w-full"
-            disabled={selectedPokemon < 0}
-            onClick={handleChoosePokemon}
-          >
-            Choose Me
-          </Button>
-        )}
+        <Button
+          className="w-full"
+          disabled={selectedPokemon < 0}
+          onClick={handleChoosePokemon}
+        >
+          Choose Me
+        </Button>
       </footer>
     </div>
   );

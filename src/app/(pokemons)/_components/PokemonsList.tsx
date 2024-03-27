@@ -36,12 +36,10 @@ export function PokemonsList({
             <li
               key={pokemon.id}
               ref={prevPokemons.length - 1 === i ? lastPokemonRef : null}
-              onClick={() => {
-                onSelectPokemon(pokemon.id);
-              }}
             >
               <PokemonItem
                 pokemon={pokemon}
+                onChange={(id) => onSelectPokemon(id)}
                 isSelected={pokemon.id === selectedPokemonId}
               />
             </li>
