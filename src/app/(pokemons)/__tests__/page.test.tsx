@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, getByText, render, screen } from "@testing-library/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Page from "../page";
 
 import "@/__mocks__/intersectionObserverMock";
+import { usePokemonsVM } from "../usePokemonsVM";
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -53,6 +54,20 @@ describe("Page", () => {
 
     const list = screen.getAllByRole("listitem");
 
-    expect(list.length).toBeGreaterThanOrEqual(2);
+    expect(list.length).toEqual(2);
+  });
+
+  it("searches for pokemons", () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Page />
+      </QueryClientProvider>
+    );
+
+    const input = screen.getByPlaceholderText("Search pokemons");
+
+    fireEvent.change(input, { target: { value: "Pikachu" } });
+
+    expect(input).toHaveValue("Pikachu");
   });
 });

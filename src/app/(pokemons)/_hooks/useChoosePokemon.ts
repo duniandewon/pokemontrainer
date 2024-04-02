@@ -7,7 +7,7 @@ import { PokemonDetail } from "@/Domain/pokemon/Model/PokemonDetail";
 export function useChoosePokemon(choosePokemonUC = choosePokemonUseCase()) {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  return useMutation({
     mutationFn: async (pokemon: PokemonDetail) => {
       choosePokemonUC.invoke(pokemon);
     },
@@ -17,8 +17,6 @@ export function useChoosePokemon(choosePokemonUC = choosePokemonUseCase()) {
       const prevPokemon = queryClient.getQueryData<PokemonDetail>([
         "my-pokemon",
       ]);
-
-      console.log("pokemon: ", pokemon);
 
       if (prevPokemon) {
         queryClient.setQueryData(["my-pokemon"], pokemon);
@@ -37,12 +35,4 @@ export function useChoosePokemon(choosePokemonUC = choosePokemonUseCase()) {
       queryClient.invalidateQueries({ queryKey: ["my-pokemon"] });
     },
   });
-
-  const onChoosePokemon = (pokemon: PokemonDetail) => {
-    mutate(pokemon);
-  };
-
-  return {
-    onChoosePokemon,
-  };
 }

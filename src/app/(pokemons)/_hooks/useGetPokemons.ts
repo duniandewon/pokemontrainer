@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import {
@@ -22,35 +20,12 @@ export function useGetPokemons(
     return pokemons;
   };
 
-  const { data, isLoading, isFetchingNextPage, fetchNextPage } =
-    useInfiniteQuery({
-      queryKey: ["pokemons", search],
-      queryFn: ({ pageParam }) => fetchPokemons(limit, pageParam, search),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => {
-        return lastPage.meta?.nextOffset || 0;
-      },
-    });
-
-  const pokemons = useMemo(
-    () => (data?.pages ? data.pages.map((page) => page.data).flat() : []),
-    [data?.pages]
-  );
-
-  const hasNext = useMemo(
-    () => data?.pages[0].meta?.hasNext || false,
-    [data?.pages]
-  );
-
-  const isFetching = useMemo(
-    () => isLoading || isFetchingNextPage,
-    [isLoading, isFetchingNextPage]
-  );
-
-  return {
-    pokemons,
-    hasNext,
-    isFetching,
-    fetchNextPage,
-  };
+  return useInfiniteQuery({
+    queryKey: ["pokemons", search],
+    queryFn: ({ pageParam }) => fetchPokemons(limit, pageParam, search),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      return lastPage.meta?.nextOffset || 0;
+    },
+  });
 }
