@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useGetPokemons } from "./_hooks/useGetPokemons";
 import { useSearch } from "./_hooks/useSearch";
@@ -16,24 +16,45 @@ export function usePokemonsVM() {
 
   const { searchDebounced, onSearchPokemons } = useSearch();
 
-  const { pokemons, hasNext, isFetching, fetchNextPage } = useGetPokemons(
-    limit.current,
-    searchDebounced
-  );
+  const {
+    data: pokemonsData,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useGetPokemons(limit.current, searchDebounced);
 
   const { refetch } = useGetPokemonDetail(selectedPokemon);
 
   const onSelectPokemon = (id: number) => setSelectedPokemon(id);
 
-  const { onChoosePokemon } = useChoosePokemon();
+  const { mutate } = useChoosePokemon();
 
   const choosePokemon = async () => {
     const { data } = await refetch();
 
     if (data?.data) {
-      onChoosePokemon(data.data);
+      mutate(data.data);
     }
   };
+
+  const pokemons = useMemo(
+    () =>
+      pokemonsData?.pages
+        ? pokemonsData.pages.map((page) => page.data).flat()
+        : [],
+    [pokemonsData?.pages]
+  );
+
+  const hasNext = useMemo(
+    () =>
+      pokemonsData?.pages[pokemonsData.pages.length - 1].meta?.hasNext || false,
+    [pokemonsData?.pages]
+  );
+
+  const isFetching = useMemo(
+    () => isLoading || isFetchingNextPage,
+    [isLoading, isFetchingNextPage]
+  );
 
   const { data } = useGetMyPokemon();
 

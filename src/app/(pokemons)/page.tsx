@@ -22,8 +22,9 @@ export default function Home() {
     isFetching,
   } = usePokemonsVM();
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) =>
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     onSearchPokemons(e.target.value);
+  };
 
   const handleChoosePokemon = () => {
     choosePokemon();
@@ -37,6 +38,7 @@ export default function Home() {
     <div className="h-full px-4 py-5 grid grid-rows-[auto_1fr_auto] gap-4">
       <header>
         <Input
+          name="search-pokemon"
           placeholder="Search pokemons"
           onChange={handleOnChange}
           disabled={isFetching}
