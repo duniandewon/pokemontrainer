@@ -1,8 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokemontrainer App
 
-## Getting Started
+![Pokemontrainer App](path/to/screenshot.png)
 
-First, run the development server:
+## Table of Contents
+
+1. [What is this app?](#what-is-this-app)
+2. [Technologies Used](#technologies-used)
+3. [How to run this app](#cloning-and-installing-a-nextjs-app)
+
+## What is this app?
+
+This is a Pokemon app where you can choose one Pokemon to be your pet. You'll take care of your chosen Pokemon by feeding it and helping it evolve.
+
+1. **Choose Your Pokemon**: Select one Pokemon to be your companion and take care of it.
+
+2. **Feeding Mechanism**: You need to feed your Pokemon regularly for it to be able to evolve.
+
+3. **Weight Management**: Be mindful of the firmness of the food you feed your Pokemon. If you feed your Pokemon with the same firmness as the previous meal, it will lose weight.
+
+## How to run this app
+
+1. **Clone the Repository**:
+
+   Open your terminal or command prompt and navigate to the directory where you want to clone the Next.js app repository. Then, run the following command:
+
+```bash
+git clone https://github.com/duniandewon/pokemontrainer.git
+# or
+git clone git@github.com:duniandewon/pokemontrainer.git
+```
+
+2. **Navigate to the app directory**:
+
+   Navigate to the app drectory by running:
+
+```bash
+cd pokemontrainer
+```
+
+3. **Install dependencies**:
+
+   Before installing the dependencies make sure you have a package manager installed, and then run on of these commands:
+
+```bash
+npm install
+# or
+yarn add
+# or
+pnpm install
+# or
+bun install
+```
+
+4. **Run development server**
 
 ```bash
 npm run dev
@@ -14,23 +64,4 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Lastly open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
