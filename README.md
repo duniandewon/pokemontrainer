@@ -1,12 +1,12 @@
 # Pokemontrainer App
 
-![Pokemontrainer App](./pokemontrainer.png)
-
 ## Table of Contents
 
 1. [What is this app?](#what-is-this-app)
 2. [Technologies Used](#technologies-used)
 3. [How to run this app](#how-to-run-this-app)
+
+![Pokemontrainer App](./pokemontrainer.png)
 
 ## What is this app?
 
@@ -27,7 +27,6 @@ The following technologies were used in developing this app:
 2. [React Query by Tanstack](https://react-query.tanstack.com/): A data-fetching library for React that helps manage, share, synchronize and update server state in your application.
 
 3. [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for quickly building custom designs without ever leaving your HTML.
-
 
 ## How to run this app
 
