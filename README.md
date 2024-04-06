@@ -1,6 +1,6 @@
 # Pokemontrainer App
 
-![Pokemontrainer App](path/to/screenshot.png)
+![Pokemontrainer App](path/to/pokemontrainer.png)
 
 ## Table of Contents
 
@@ -17,6 +17,17 @@ This is a Pokemon app where you can choose one Pokemon to be your pet. You'll ta
 2. **Feeding Mechanism**: You need to feed your Pokemon regularly for it to be able to evolve.
 
 3. **Weight Management**: Be mindful of the firmness of the food you feed your Pokemon. If you feed your Pokemon with the same firmness as the previous meal, it will lose weight.
+
+## Technologies Used
+
+The following technologies were used in developing this app:
+
+1. [Next.js](https://nextjs.org/): A React framework for building server-side rendered and static web applications.
+
+2. [React Query by Tanstack](https://react-query.tanstack.com/): A data-fetching library for React that helps manage, share, synchronize and update server state in your application.
+
+3. [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for quickly building custom designs without ever leaving your HTML.
+
 
 ## How to run this app
 
