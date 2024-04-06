@@ -1,6 +1,6 @@
 # Pokemontrainer App
 
-![Pokemontrainer App](path/to/pokemontrainer.png)
+![Pokemontrainer App](./pokemontrainer.png)
 
 ## Table of Contents
 
