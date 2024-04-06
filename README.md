@@ -6,7 +6,7 @@
 
 1. [What is this app?](#what-is-this-app)
 2. [Technologies Used](#technologies-used)
-3. [How to run this app](#cloning-and-installing-a-nextjs-app)
+3. [How to run this app](#how-to-run-this-app)
 
 ## What is this app?
 
