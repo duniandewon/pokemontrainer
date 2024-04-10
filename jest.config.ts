@@ -15,7 +15,11 @@ const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   collectCoverageFrom: ["<rootDir>/src/**/*.{tsx,ts}"],
+  setupFiles: ["<rootDir>/jest.polyfills.js"],
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+  testEnvironmentOptions: {
+    customExportConditions: [""],
+  },
 };
 
 export default createJestConfig(config);
